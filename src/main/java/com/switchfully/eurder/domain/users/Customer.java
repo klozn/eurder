@@ -9,17 +9,20 @@ public class Customer {
     private final String id;
     private String firstname;
     private String lastname;
-    private String email;
+    private final String email;
     private Address address;
     private String phoneNr;
 
-    public Customer(String firstname, String lastname, String email, Address address, String phoneNr) {
+    private Customer(Builder builder) {
         id = UUID.randomUUID().toString();
-        setFirstname(firstname);
-        setLastname(lastname);
-        setEmail(email);
-        setAddress(address);
-        setPhoneNr(phoneNr);
+        setFirstname(builder.firstname);
+        setLastname(builder.lastname);
+        if (!EmailValidator.getInstance().isValid(builder.email)) {
+            throw new IllegalArgumentException("Invalid email provided.");
+        }
+        this.email = builder.email;
+        setAddress(builder.address);
+        setPhoneNr(builder.phoneNr);
     }
 
     public String getId() {
@@ -52,16 +55,6 @@ public class Customer {
         return email;
     }
 
-    public void setEmail(String email) {
-        if (firstname == null || firstname.isBlank()) {
-            throw new IllegalArgumentException("Email is required");
-        }
-        if (!EmailValidator.getInstance().isValid(email)) {
-            throw new IllegalArgumentException("Invalid email provided.");
-        }
-        this.email = email;
-    }
-
     public Address getAddress() {
         return address;
     }
@@ -89,5 +82,42 @@ public class Customer {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public static class Builder {
+        private String firstname;
+        private String lastname;
+        private String email;
+        private Address address;
+        private String phoneNr;
+
+        public Builder withFirstname(String firstname) {
+            this.firstname = firstname;
+            return this;
+        }
+
+        public Builder withLastname(String lastname) {
+            this.lastname = lastname;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder withAddress(Address address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder withPhoneNr(String phoneNr) {
+            this.phoneNr = phoneNr;
+            return this;
+        }
+
+        public Customer build() {
+            return new Customer(this);
+        }
     }
 }

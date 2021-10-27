@@ -18,9 +18,19 @@ public class CustomerDtoMapper {
     }
 
     public static Customer toEntity(CreateCustomerDto customerDto) {
-        Address address = new Address(customerDto.getStreet(), customerDto.getStreetNr(), customerDto.getCity(),
-                customerDto.getPostalCode());
-        return new Customer(customerDto.getFirstname(), customerDto.getLastname(), customerDto.getEmail(),
-                address, customerDto.getPhoneNr());
+        Address address = new Address.Builder()
+                .withStreet(customerDto.getStreet())
+                .withStreetNr(customerDto.getStreetNr())
+                .withCity(customerDto.getCity())
+                .withPostalCode(customerDto.getPostalCode())
+                .build();
+
+        return new Customer.Builder()
+                .withFirstname(customerDto.getFirstname())
+                .withLastname(customerDto.getLastname())
+                .withEmail(customerDto.getEmail())
+                .withAddress(address)
+                .withPhoneNr(customerDto.getPhoneNr())
+                .build();
     }
 }

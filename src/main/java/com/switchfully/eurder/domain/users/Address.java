@@ -3,16 +3,17 @@ package com.switchfully.eurder.domain.users;
 import java.util.Objects;
 
 public class Address {
-    private String street;
-    private String streetNr;
-    private String city;
-    private String postalCode;
+    private final String street;
+    private final String streetNr;
+    private final String city;
+    private final String postalCode;
 
-    public Address(String street, String streetNr, String city, String postalCode) {
-        setStreet(street);
-        setStreetNr(streetNr);
-        setCity(city);
-        setPostalCode(postalCode);
+    private Address(Builder builder) {
+        street = builder.street;
+        streetNr = builder.streetNr;
+        city = builder.city;
+        postalCode = builder.postalCode;
+        assertNonNullOrBlankFields();
     }
 
     public String getStreet() {
@@ -31,32 +32,19 @@ public class Address {
         return postalCode;
     }
 
-    public void setStreet(String street) {
+    private void assertNonNullOrBlankFields() {
         if (street == null || street.isBlank()) {
             throw new IllegalArgumentException("Street is required");
         }
-        this.street = street;
-    }
-
-    public void setStreetNr(String streetNr) {
         if (streetNr == null || streetNr.isBlank()) {
             throw new IllegalArgumentException("StreetNumber is required");
         }
-        this.streetNr = streetNr;
-    }
-
-    public void setCity(String city) {
         if (city == null || city.isBlank()) {
             throw new IllegalArgumentException("City is required");
         }
-        this.city = city;
-    }
-
-    public void setPostalCode(String postalCode) {
         if (postalCode == null || postalCode.isBlank()) {
             throw new IllegalArgumentException("PostalCode is required");
         }
-        this.postalCode = postalCode;
     }
 
     @Override
@@ -70,5 +58,36 @@ public class Address {
     @Override
     public int hashCode() {
         return Objects.hash(street, streetNr, postalCode);
+    }
+
+    public static class Builder {
+        private String street;
+        private String streetNr;
+        private String city;
+        private String postalCode;
+
+        public Builder withStreet(String street) {
+            this.street = street;
+            return this;
+        }
+
+        public Builder withStreetNr(String streetNr) {
+            this.streetNr = streetNr;
+            return this;
+        }
+
+        public Builder withCity(String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder withPostalCode(String postalCode) {
+            this.postalCode = postalCode;
+            return this;
+        }
+
+        public Address build() {
+            return new Address(this);
+        }
     }
 }
