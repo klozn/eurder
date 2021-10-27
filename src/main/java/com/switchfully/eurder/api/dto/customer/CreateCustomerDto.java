@@ -8,6 +8,7 @@ public class CreateCustomerDto {
     private String streetNr;
     private String city;
     private String postalCode;
+    private String country;
     private String phoneNr;
 
     public String getFirstname() {
@@ -36,6 +37,10 @@ public class CreateCustomerDto {
 
     public String getPostalCode() {
         return postalCode;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     public String getPhoneNr() {

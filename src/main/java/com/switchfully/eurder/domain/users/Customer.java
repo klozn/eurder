@@ -11,18 +11,16 @@ public class Customer {
     private String lastname;
     private final String email;
     private Address address;
-    private String phoneNr;
+    private String phoneNumber;
 
     private Customer(Builder builder) {
         id = UUID.randomUUID().toString();
-        setFirstname(builder.firstname);
-        setLastname(builder.lastname);
-        if (!EmailValidator.getInstance().isValid(builder.email)) {
-            throw new IllegalArgumentException("Invalid email provided.");
-        }
-        this.email = builder.email;
-        setAddress(builder.address);
-        setPhoneNr(builder.phoneNr);
+        firstname = builder.firstname;
+        lastname = builder.lastname;
+        email = builder.email;
+        address = builder.address;
+        phoneNumber = builder.phoneNr;
+        assertValidCustomer();
     }
 
     public String getId() {
@@ -33,22 +31,8 @@ public class Customer {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
-        if (firstname == null || firstname.isBlank()) {
-            throw new IllegalArgumentException("Firstname is required");
-        }
-        this.firstname = firstname;
-    }
-
     public String getLastname() {
         return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        if (lastname == null || lastname.isBlank()) {
-            throw new IllegalArgumentException("Lastname is required");
-        }
-        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -59,16 +43,39 @@ public class Customer {
         return address;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
     public void setAddress(Address address) {
         this.address = address;
     }
 
-    public String getPhoneNr() {
-        return phoneNr;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public void setPhoneNr(String phoneNr) {
-        this.phoneNr = phoneNr;
+    private void assertValidCustomer() {
+        if (firstname == null || firstname.isBlank()) {
+            throw new IllegalArgumentException("Firstname is required");
+        }
+        if (lastname == null || lastname.isBlank()) {
+            throw new IllegalArgumentException("Lastname is required");
+        }
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+        if (!EmailValidator.getInstance().isValid(email)) {
+            throw new IllegalArgumentException("Invalid email provided.");
+        }
     }
 
     @Override

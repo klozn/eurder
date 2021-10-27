@@ -14,7 +14,7 @@ public class CustomerDtoMapper {
                 .setStreetNr(customer.getAddress().getStreetNr())
                 .setCity(customer.getAddress().getCity())
                 .setPostalCode(customer.getAddress().getPostalCode())
-                .setPhoneNr(customer.getPhoneNr());
+                .setPhoneNr(customer.getPhoneNumber());
     }
 
     public static Customer toEntity(CreateCustomerDto customerDto) {
@@ -23,6 +23,7 @@ public class CustomerDtoMapper {
                 .withStreetNr(customerDto.getStreetNr())
                 .withCity(customerDto.getCity())
                 .withPostalCode(customerDto.getPostalCode())
+                .withCountry(customerDto.getCountry())
                 .build();
 
         return new Customer.Builder()

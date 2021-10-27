@@ -18,15 +18,7 @@ public class CustomerService {
     }
 
     public void createNewCustomer(CreateCustomerDto customerDto) {
-        assertEmailNotRegistered(customerDto.getEmail());
         customerRepo.save(toEntity(customerDto));
-    }
-
-    private void assertEmailNotRegistered(String email) {
-        if (customerRepo.getAll().stream()
-                .anyMatch(customer -> customer.getEmail().equals(email))) {
-            throw new EmailAlreadyExistsException("The email address (" + email + ") is already registered to a customer.");
-        }
     }
 
 }

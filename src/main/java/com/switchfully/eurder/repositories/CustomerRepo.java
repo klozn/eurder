@@ -1,5 +1,6 @@
 package com.switchfully.eurder.repositories;
 
+import com.switchfully.eurder.domain.exceptions.EmailAlreadyExistsException;
 import com.switchfully.eurder.domain.users.Customer;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,14 @@ public class CustomerRepo {
     }
 
     public Customer save(Customer customer) {
+        assertEmailNotRegistered(customer.getEmail());
         return customers.put(customer.getId(), customer);
+    }
+
+    private void assertEmailNotRegistered(String email) {
+        if (getAll().stream()
+                .anyMatch(customer -> customer.getEmail().equals(email))) {
+            throw new EmailAlreadyExistsException("The email address (" + email + ") is already registered to a customer.");
+        }
     }
 }

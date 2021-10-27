@@ -7,13 +7,15 @@ public class Address {
     private final String streetNr;
     private final String city;
     private final String postalCode;
+    private final String country;
 
     private Address(Builder builder) {
         street = builder.street;
         streetNr = builder.streetNr;
         city = builder.city;
         postalCode = builder.postalCode;
-        assertNonNullOrBlankFields();
+        country = builder.country;
+        assertValidAddress();
     }
 
     public String getStreet() {
@@ -32,7 +34,7 @@ public class Address {
         return postalCode;
     }
 
-    private void assertNonNullOrBlankFields() {
+    private void assertValidAddress() {
         if (street == null || street.isBlank()) {
             throw new IllegalArgumentException("Street is required");
         }
@@ -43,6 +45,9 @@ public class Address {
             throw new IllegalArgumentException("City is required");
         }
         if (postalCode == null || postalCode.isBlank()) {
+            throw new IllegalArgumentException("PostalCode is required");
+        }
+        if (country == null || country.isBlank()) {
             throw new IllegalArgumentException("PostalCode is required");
         }
     }
@@ -65,6 +70,7 @@ public class Address {
         private String streetNr;
         private String city;
         private String postalCode;
+        private String country;
 
         public Builder withStreet(String street) {
             this.street = street;
@@ -83,6 +89,11 @@ public class Address {
 
         public Builder withPostalCode(String postalCode) {
             this.postalCode = postalCode;
+            return this;
+        }
+
+        public Builder withCountry(String country) {
+            this.country = country;
             return this;
         }
 
