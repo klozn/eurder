@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class Address {
     private final String street;
-    private final String streetNr;
+    private final String houseNumber;
     private final String city;
     private final String postalCode;
     private final String country;
 
     private Address(Builder builder) {
         street = builder.street;
-        streetNr = builder.streetNr;
+        houseNumber = builder.houseNumber;
         city = builder.city;
         postalCode = builder.postalCode;
         country = builder.country;
@@ -22,8 +22,8 @@ public class Address {
         return street;
     }
 
-    public String getStreetNr() {
-        return streetNr;
+    public String getHouseNumber() {
+        return houseNumber;
     }
 
     public String getCity() {
@@ -34,11 +34,15 @@ public class Address {
         return postalCode;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
     private void assertValidAddress() {
         if (street == null || street.isBlank()) {
             throw new IllegalArgumentException("Street is required");
         }
-        if (streetNr == null || streetNr.isBlank()) {
+        if (houseNumber == null || houseNumber.isBlank()) {
             throw new IllegalArgumentException("StreetNumber is required");
         }
         if (city == null || city.isBlank()) {
@@ -48,7 +52,7 @@ public class Address {
             throw new IllegalArgumentException("PostalCode is required");
         }
         if (country == null || country.isBlank()) {
-            throw new IllegalArgumentException("PostalCode is required");
+            throw new IllegalArgumentException("Country is required");
         }
     }
 
@@ -57,17 +61,17 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return street.equals(address.street) && streetNr.equals(address.streetNr) && postalCode.equals(address.postalCode);
+        return street.equals(address.street) && houseNumber.equals(address.houseNumber) && postalCode.equals(address.postalCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(street, streetNr, postalCode);
+        return Objects.hash(street, houseNumber, postalCode);
     }
 
     public static class Builder {
         private String street;
-        private String streetNr;
+        private String houseNumber;
         private String city;
         private String postalCode;
         private String country;
@@ -77,8 +81,8 @@ public class Address {
             return this;
         }
 
-        public Builder withStreetNr(String streetNr) {
-            this.streetNr = streetNr;
+        public Builder withHouseNumber(String houseNumber) {
+            this.houseNumber = houseNumber;
             return this;
         }
 

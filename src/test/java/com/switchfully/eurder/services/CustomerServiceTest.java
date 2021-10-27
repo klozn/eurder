@@ -1,11 +1,9 @@
 package com.switchfully.eurder.services;
 
-import com.switchfully.eurder.domain.users.Address;
-import com.switchfully.eurder.domain.users.Customer;
+import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
 import com.switchfully.eurder.repositories.CustomerRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,16 +19,22 @@ class CustomerServiceTest {
         service = new CustomerService(repo);
     }
 
-    @Nested
-    @DisplayName("Creating a new customer")
-    class CustomerCreation {
+    @Test
+    @DisplayName("creating a new customer saves customer to repo")
+    void whenCreatingNewCustomer_thenAddToRepo() {
+        CreateCustomerDto customerDto = new CreateCustomerDto()
+                .setFirstname("testFirstname")
+                .setLastname("testLastname")
+                .setEmail("test@mail.com")
+                .setStreet("testStreet")
+                .setHouseNumber("testHouseNumber")
+                .setCity("testCity")
+                .setPostalCode("testPostal")
+                .setCountry("testCountry");
+        int repoSize = repo.getAll().size();
 
-        @Test
-        @DisplayName("If email already registered, throw exception")
-        void whenEmailAlreadyExists_thenThrowException() {
-
-
-        }
+        assertTrue(service.createNewCustomer(customerDto));
+        assertEquals(repoSize + 1, repo.getAll().size());
     }
 
 }

@@ -1,7 +1,6 @@
 package com.switchfully.eurder.services;
 
-import com.switchfully.eurder.api.dto.customer.*;
-import com.switchfully.eurder.domain.exceptions.EmailAlreadyExistsException;
+import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
 import com.switchfully.eurder.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,11 @@ public class CustomerService {
         this.customerRepo = customerRepo;
     }
 
-    public void createNewCustomer(CreateCustomerDto customerDto) {
-        customerRepo.save(toEntity(customerDto));
+    public boolean createNewCustomer(CreateCustomerDto customerDto) {
+        if (customerDto == null) {
+            throw new NullPointerException("You can't create a Customer from a null object.");
+        }
+        return customerRepo.save(toEntity(customerDto));
     }
 
 }

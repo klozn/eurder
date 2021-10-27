@@ -15,12 +15,12 @@ public class Customer {
 
     private Customer(Builder builder) {
         id = UUID.randomUUID().toString();
-        firstname = builder.firstname;
-        lastname = builder.lastname;
+        setFirstname(builder.firstname);
+        setLastname(builder.lastname);
+        assertValidEmail(builder.email);
         email = builder.email;
-        address = builder.address;
-        phoneNumber = builder.phoneNr;
-        assertValidCustomer();
+        setAddress(builder.address);
+        setPhoneNumber(builder.phoneNr);
     }
 
     public String getId() {
@@ -48,10 +48,12 @@ public class Customer {
     }
 
     public void setFirstname(String firstname) {
+        assertValidFirstName(firstname);
         this.firstname = firstname;
     }
 
     public void setLastname(String lastname) {
+        assertValidLastname(lastname);
         this.lastname = lastname;
     }
 
@@ -60,21 +62,34 @@ public class Customer {
     }
 
     public void setPhoneNumber(String phoneNumber) {
+        assertValidPhoneNumber(phoneNumber);
         this.phoneNumber = phoneNumber;
     }
 
-    private void assertValidCustomer() {
+    private void assertValidFirstName(String firstname) {
         if (firstname == null || firstname.isBlank()) {
-            throw new IllegalArgumentException("Firstname is required");
+            throw new IllegalArgumentException("Firstname is required.");
         }
+    }
+
+    private void assertValidLastname(String lastname) {
         if (lastname == null || lastname.isBlank()) {
-            throw new IllegalArgumentException("Lastname is required");
+            throw new IllegalArgumentException("Lastname is required.");
         }
+    }
+
+    private void assertValidEmail(String email) {
         if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("Email is required");
+            throw new IllegalArgumentException("Email is required.");
         }
         if (!EmailValidator.getInstance().isValid(email)) {
             throw new IllegalArgumentException("Invalid email provided.");
+        }
+    }
+
+    private void assertValidPhoneNumber(String phoneNumber) {
+        if (phoneNumber != null && !PhoneNumberValidator.getInstance().isValid(phoneNumber)) {
+            throw new IllegalArgumentException("Invalid phone number provided.");
         }
     }
 

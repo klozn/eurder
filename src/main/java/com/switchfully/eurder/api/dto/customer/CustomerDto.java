@@ -5,11 +5,8 @@ public class CustomerDto {
     private String firstname;
     private String lastname;
     private String email;
-    private String street;
-    private String streetNr;
-    private String city;
-    private String postalCode;
-    private String phoneNr;
+    private AddressDto address;
+    private String phoneNumber;
 
     public CustomerDto setId(String id) {
         this.id = id;
@@ -32,27 +29,32 @@ public class CustomerDto {
     }
 
     public CustomerDto setStreet(String street) {
-        this.street = street;
+        this.address.setStreet(street);
         return this;
     }
 
-    public CustomerDto setStreetNr(String streetNr) {
-        this.streetNr = streetNr;
+    public CustomerDto setHouseNumber(String houseNumber) {
+        this.address.setHouseNumber(houseNumber);
         return this;
     }
 
     public CustomerDto setCity(String city) {
-        this.city = city;
+        this.address.setCity(city);
         return this;
     }
 
     public CustomerDto setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+        this.address.setPostalCode(postalCode);
         return this;
     }
 
-    public CustomerDto setPhoneNr(String phoneNr) {
-        this.phoneNr = phoneNr;
+    public CustomerDto setCountry(String country) {
+        this.address.setCountry(country);
+        return this;
+    }
+
+    public CustomerDto setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
         return this;
     }
 }

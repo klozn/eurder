@@ -1,7 +1,6 @@
 package com.switchfully.eurder.api;
 
 import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
-import com.switchfully.eurder.domain.exceptions.EmailAlreadyExistsException;
 import com.switchfully.eurder.services.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,19 +14,20 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
-    private CustomerService service;
-    private Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
+    private final CustomerService service;
+    private final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @Autowired
     public CustomerController(CustomerService service) {
         this.service = service;
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void registerCustomer(CreateCustomerDto customerDto) {
         logger.info("Creating new customer for email: " + customerDto.getEmail());
-        service.createNewCustomer(customerDto);
+        logger.info("Created = " + service.createNewCustomer(customerDto));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -36,9 +36,9 @@ public class CustomerController {
         response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public void handleEmailAlreadyExistsException(EmailAlreadyExistsException exception, HttpServletResponse response) throws IOException {
-        logger.error(exception.getMessage());
+    @ExceptionHandler(IllegalStateException.class)
+    public void handleIllegalStateException(IllegalStateException exception, HttpServletResponse response) throws IOException {
+        logger.error("Illegal State for Customers: " + exception.getMessage());
         response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 }
