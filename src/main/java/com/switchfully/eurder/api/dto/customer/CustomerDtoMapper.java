@@ -2,9 +2,11 @@ package com.switchfully.eurder.api.dto.customer;
 
 import com.switchfully.eurder.domain.users.Address;
 import com.switchfully.eurder.domain.users.Customer;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomerDtoMapper {
-    public static CustomerDto toDto(Customer customer){
+    public CustomerDto toDto(Customer customer){
         return new CustomerDto()
                 .setId(customer.getId())
                 .setFirstname(customer.getFirstname())
@@ -18,7 +20,7 @@ public class CustomerDtoMapper {
                 .setPhoneNumber(customer.getPhoneNumber());
     }
 
-    public static Customer toEntity(CreateCustomerDto customerDto) {
+    public Customer toEntity(CreateCustomerDto customerDto) {
         Address address = new Address.Builder()
                 .withStreet(customerDto.getStreet())
                 .withHouseNumber(customerDto.getHouseNumber())

@@ -3,19 +3,18 @@ package com.switchfully.eurder.repositories;
 import com.switchfully.eurder.domain.Item;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class ItemRepo {
-    private final Set<Item> items = new HashSet<>();
+    private final Map<String, Item> items = new HashMap<>();
 
-    public Set<Item> getAll() {
-        return Collections.unmodifiableSet(items);
+    public Item save(Item item) {
+        return items.put(item.getId(), item);
     }
 
-    public boolean save(Item item) {
-        return items.add(item);
+    public Item getById(String itemId) {
+        return items.get(itemId);
     }
 }
