@@ -1,6 +1,7 @@
 package com.switchfully.eurder.api;
 
 import com.switchfully.eurder.api.dto.items.ItemDto;
+import com.switchfully.eurder.api.dto.items.UpdateItemDto;
 import com.switchfully.eurder.services.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/items")
@@ -25,9 +27,9 @@ public class ItemController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerItem(@RequestBody ItemDto itemDto, @RequestHeader String authorizedUserId) {
-        logger.info("Creating item with name: " + itemDto.getName() + " by authorizedUserId: " + authorizedUserId);
-        boolean created = service.createNewItem(itemDto, authorizedUserId);
+    public void registerItem(@RequestBody UpdateItemDto updateItemDto, @RequestHeader String authorizedUserId) {
+        logger.info("Creating item with name: " + updateItemDto.getName() + " by authorizedUserId: " + authorizedUserId);
+        boolean created = service.createNewItem(updateItemDto, authorizedUserId);
         if (created) {
             logger.info("Item creation successful");
         } else {
@@ -36,15 +38,21 @@ public class ItemController {
     }
 
     @PutMapping(path = "/{itemId}", consumes = "application/json")
-    public void updateItem(@PathVariable String itemId, @RequestBody ItemDto itemDto,
+    public void updateItem(@PathVariable String itemId, @RequestBody UpdateItemDto updateItemDto,
                            @RequestHeader String authorizedUserId) {
-        logger.info("Updating item with name: " + itemDto.getName() + " by authorizedUserId: " + authorizedUserId);
-        boolean updated = service.updateItem(itemId, itemDto, authorizedUserId);
+        logger.info("Updating item with name: " + updateItemDto.getName() + " by authorizedUserId: " + authorizedUserId);
+        boolean updated = service.updateItem(itemId, updateItemDto, authorizedUserId);
         if (updated) {
             logger.info("Item update successful");
         } else {
             logger.error("Item update failed.");
         }
+    }
+
+    @GetMapping(produces = "application/json")
+    public List<ItemDto> getItems() {
+        logger.info("Showing all items.");
+        return service.getItems();
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

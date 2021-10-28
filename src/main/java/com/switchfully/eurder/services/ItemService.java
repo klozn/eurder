@@ -1,11 +1,15 @@
 package com.switchfully.eurder.services;
 
 import com.switchfully.eurder.api.dto.items.ItemDto;
+import com.switchfully.eurder.api.dto.items.UpdateItemDto;
 import com.switchfully.eurder.api.dto.items.ItemDtoMapper;
 import com.switchfully.eurder.domain.Item;
 import com.switchfully.eurder.repositories.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
@@ -21,12 +25,12 @@ public class ItemService {
         this.mapper = mapper;
     }
 
-    public boolean createNewItem(ItemDto itemDto, String authorizedUserId) {
-        if (itemDto == null) {
+    public boolean createNewItem(UpdateItemDto updateItemDto, String authorizedUserId) {
+        if (updateItemDto == null) {
             throw new NullPointerException("You can't create an Item from a null object.");
         }
         adminService.assertAdminId(authorizedUserId);
-        return repo.save(mapper.toEntity(itemDto)) == null;
+        return repo.save(mapper.toEntity(updateItemDto)) == null;
     }
 
     public Item getById(String itemId) {
@@ -41,16 +45,22 @@ public class ItemService {
         return item;
     }
 
-    public boolean updateItem(String itemId, ItemDto itemDto, String authorizedUserId) {
+    public boolean updateItem(String itemId, UpdateItemDto updateItemDto, String authorizedUserId) {
         adminService.assertAdminId(authorizedUserId);
-        if (itemDto == null) {
+        if (updateItemDto == null) {
             throw new NullPointerException("You can't update an Item from a null object.");
         }
         Item item = fetchItemIfExistsElseThrowException(itemId);
-        item.setName(itemDto.getName());
-        item.setDescription(itemDto.getDescription());
-        item.setPrice(itemDto.getPrice());
-        item.setStock(itemDto.getStock());
+        item.setName(updateItemDto.getName());
+        item.setDescription(updateItemDto.getDescription());
+        item.setPrice(updateItemDto.getPrice());
+        item.setStock(updateItemDto.getStock());
         return true;
+    }
+
+    public List<ItemDto> getItems() {
+        return repo.getAll().stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 }
