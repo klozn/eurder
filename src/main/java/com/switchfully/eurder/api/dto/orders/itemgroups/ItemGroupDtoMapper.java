@@ -35,4 +35,10 @@ public class ItemGroupDtoMapper {
                 .setAmount(itemGroup.getAmount())
                 .setTotalPrice(totalPrice);
     }
+
+    public CreateItemGroupDto toCreateItemGroupDto(ItemGroup itemGroup) {
+        return new CreateItemGroupDto()
+                .setItemId(itemGroup.getItemId())
+                .setAmount(itemGroup.getAmount());
+    }
 }

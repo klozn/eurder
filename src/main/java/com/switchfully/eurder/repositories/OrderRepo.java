@@ -20,4 +20,11 @@ public class OrderRepo {
     public List<Order> getAll() {
         return Collections.unmodifiableList(orders.stream().toList());
     }
+
+    public Order getById(String orderId) {
+        return orders.stream()
+                .filter(order -> order.getId().equals(orderId))
+                .findFirst()
+                .orElse(null);
+    }
 }

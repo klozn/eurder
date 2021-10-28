@@ -11,4 +11,9 @@ public class CreateOrderDto {
     public List<CreateItemGroupDto> getItemGroups() {
         return itemGroups;
     }
+
+    public CreateOrderDto setItemGroups(List<CreateItemGroupDto> itemGroups) {
+        this.itemGroups = itemGroups;
+        return this;
+    }
 }

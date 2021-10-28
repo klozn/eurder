@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -46,6 +47,18 @@ public class OrderController {
     public OrderReportDto getOrderReport(@RequestHeader String authorizedUserId) {
         logger.info("Getting order report for customer with id: " + authorizedUserId);
         return service.getOrdersByCustomerID(authorizedUserId);
+    }
+
+    @PostMapping(path = "{orderId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void reOrder(@PathVariable String orderId, @RequestHeader String authorizedUserId) {
+        logger.info("Reordering orderId: " + orderId + " with customerId: " + authorizedUserId);
+        boolean created = service.reorder(orderId, authorizedUserId);
+        if (created) {
+            logger.info("Order creation successful");
+        } else {
+            logger.error("Order creation failed.");
+        }
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

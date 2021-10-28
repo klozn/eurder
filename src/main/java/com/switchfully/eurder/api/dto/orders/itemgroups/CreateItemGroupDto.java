@@ -11,4 +11,14 @@ public class CreateItemGroupDto {
     public int getAmount() {
         return amount;
     }
+
+    public CreateItemGroupDto setItemId(String itemId) {
+        this.itemId = itemId;
+        return this;
+    }
+
+    public CreateItemGroupDto setAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
 }
