@@ -1,6 +1,6 @@
 package com.switchfully.eurder.api.dto.items;
 
-public class CreateItemDto {
+public class ItemDto {
     private String name;
     private String description;
     private double price;
@@ -10,7 +10,7 @@ public class CreateItemDto {
         return name;
     }
 
-    public CreateItemDto setName(String name) {
+    public ItemDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -19,7 +19,7 @@ public class CreateItemDto {
         return description;
     }
 
-    public CreateItemDto setDescription(String description) {
+    public ItemDto setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -28,7 +28,7 @@ public class CreateItemDto {
         return price;
     }
 
-    public CreateItemDto setPrice(double price) {
+    public ItemDto setPrice(double price) {
         this.price = price;
         return this;
     }
@@ -37,7 +37,7 @@ public class CreateItemDto {
         return stock;
     }
 
-    public CreateItemDto setStock(int stock) {
+    public ItemDto setStock(int stock) {
         this.stock = stock;
         return this;
     }

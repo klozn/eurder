@@ -1,6 +1,6 @@
 package com.switchfully.eurder.services;
 
-import com.switchfully.eurder.api.dto.items.CreateItemDto;
+import com.switchfully.eurder.api.dto.items.ItemDto;
 import com.switchfully.eurder.api.dto.items.ItemDtoMapper;
 import com.switchfully.eurder.domain.Item;
 import com.switchfully.eurder.repositories.ItemRepo;
@@ -21,7 +21,7 @@ public class ItemService {
         this.mapper = mapper;
     }
 
-    public boolean createNewItem(CreateItemDto itemDto, String authorizedUserId) {
+    public boolean createNewItem(ItemDto itemDto, String authorizedUserId) {
         if (itemDto == null) {
             throw new NullPointerException("You can't create an Item from a null object.");
         }
@@ -45,5 +45,18 @@ public class ItemService {
             throw new IllegalArgumentException("There is no item with id: " + itemId);
         }
         return item;
+    }
+
+    public boolean updateItem(String itemId, ItemDto itemDto, String authorizedUserId) {
+        adminService.assertAdminId(authorizedUserId);
+        if (itemDto == null) {
+            throw new NullPointerException("You can't update an Item from a null object.");
+        }
+        Item item = fetchItemIfExistsElseThrowException(itemId);
+        item.setName(itemDto.getName());
+        item.setDescription(itemDto.getDescription());
+        item.setPrice(itemDto.getPrice());
+        item.setStock(itemDto.getStock());
+        return true;
     }
 }
