@@ -4,6 +4,7 @@ import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
 import com.switchfully.eurder.api.dto.customer.CustomerDto;
 import com.switchfully.eurder.api.dto.customer.CustomerDtoMapper;
 import com.switchfully.eurder.domain.exceptions.UnauthorizedUserException;
+import com.switchfully.eurder.domain.users.Customer;
 import com.switchfully.eurder.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,14 @@ public class CustomerService {
                 .map(mapper::toDto)
                 .sorted(Comparator.comparing(CustomerDto::getLastname).thenComparing(CustomerDto::getFirstname))
                 .collect(Collectors.toList());
+    }
+
+    public CustomerDto getCustomerById(String customerId, String authorizedUserId) {
+        adminService.assertAdminId(authorizedUserId);
+        Customer customer = repo.getById(customerId);
+        if (customer == null) {
+            throw new IllegalArgumentException("No customer found with id: " + customerId);
+        }
+        return mapper.toDto(customer);
     }
 }

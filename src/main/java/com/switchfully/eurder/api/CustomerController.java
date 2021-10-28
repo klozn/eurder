@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -46,11 +47,15 @@ public class CustomerController {
 
     @GetMapping(produces = "application/json")
     public List<CustomerDto> getAllCustomers(@RequestHeader String authorizedUserId) {
-        logger.info("Getting all customers for user with id: " + authorizedUserId);
+        logger.info("Getting all customers for admin with id: " + authorizedUserId);
         return service.getAllCustomers(authorizedUserId);
     }
 
-
+    @GetMapping(path = "/{customerId}", produces = "application/json")
+    public CustomerDto getCustomerById(@PathVariable String customerId, @RequestHeader String authorizedUserId) {
+        logger.info("Getting details of customer with id: " + customerId + " for admin with id: " + authorizedUserId);
+        return service.getCustomerById(customerId, authorizedUserId);
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public void handleIllegalArgumentException(IllegalArgumentException exception, HttpServletResponse response) throws IOException {

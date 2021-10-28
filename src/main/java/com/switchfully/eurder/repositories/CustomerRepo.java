@@ -27,4 +27,11 @@ public class CustomerRepo {
             throw new IllegalStateException("The email address (" + email + ") is already registered to a customer.");
         }
     }
+
+    public Customer getById(String customerId) {
+        return customers.stream()
+                .filter(customer -> customer.getId().equals(customerId))
+                .findAny()
+                .orElse(null);
+    }
 }
