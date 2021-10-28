@@ -49,7 +49,7 @@ public class OrderController {
         return service.getOrdersByCustomerID(authorizedUserId);
     }
 
-    @PostMapping(path = "{orderId}")
+    @PostMapping(path = "/{orderId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void reOrder(@PathVariable String orderId, @RequestHeader String authorizedUserId) {
         logger.info("Reordering orderId: " + orderId + " with customerId: " + authorizedUserId);
