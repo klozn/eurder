@@ -23,12 +23,14 @@ public class CustomerController {
         this.service = service;
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerCustomer(CreateCustomerDto customerDto) {
+    public void registerCustomer(@RequestBody CreateCustomerDto customerDto) {
         logger.info("Creating new customer for email: " + customerDto.getEmail());
         logger.info("Created = " + service.createNewCustomer(customerDto));
     }
+
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     public void handleIllegalArgumentException(IllegalArgumentException exception, HttpServletResponse response) throws IOException {
@@ -39,6 +41,12 @@ public class CustomerController {
     @ExceptionHandler(IllegalStateException.class)
     public void handleIllegalStateException(IllegalStateException exception, HttpServletResponse response) throws IOException {
         logger.error("Illegal State for Customers: " + exception.getMessage());
+        response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public void handleNullPointerException(NullPointerException exception, HttpServletResponse response) throws IOException {
+        logger.error("Null Pointer for Customer: " + exception.getMessage());
         response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 }

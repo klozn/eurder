@@ -106,6 +106,19 @@ public class Customer {
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Customer{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", firstname='").append(firstname).append('\'');
+        sb.append(", lastname='").append(lastname).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", address=").append(address);
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
     public static class Builder {
         private String firstname;
         private String lastname;

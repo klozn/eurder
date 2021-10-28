@@ -1,6 +1,7 @@
 package com.switchfully.eurder.services;
 
 import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
+import com.switchfully.eurder.domain.users.Customer;
 import com.switchfully.eurder.repositories.CustomerRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,6 +36,10 @@ class CustomerServiceTest {
 
         assertTrue(service.createNewCustomer(customerDto));
         assertEquals(repoSize + 1, repo.getAll().size());
+        Customer customer = repo.getAll().stream()
+                .filter(c -> c.getFirstname().equals("testFirstname")).findFirst().orElse(null);
+        System.out.println(customer);
+
     }
 
 }

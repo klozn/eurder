@@ -69,6 +69,8 @@ public class Address {
         return Objects.hash(street, houseNumber, postalCode);
     }
 
+
+
     public static class Builder {
         private String street;
         private String houseNumber;
