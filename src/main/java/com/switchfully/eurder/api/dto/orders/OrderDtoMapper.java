@@ -1,8 +1,8 @@
 package com.switchfully.eurder.api.dto.orders;
 
-import com.switchfully.eurder.api.dto.orders.itemgroups.CreateItemGroupDto;
-import com.switchfully.eurder.api.dto.orders.itemgroups.ItemGroupDto;
-import com.switchfully.eurder.api.dto.orders.itemgroups.ItemGroupDtoMapper;
+import com.switchfully.eurder.api.dto.itemgroups.CreateItemGroupDto;
+import com.switchfully.eurder.api.dto.itemgroups.ItemGroupDto;
+import com.switchfully.eurder.api.dto.itemgroups.ItemGroupDtoMapper;
 import com.switchfully.eurder.domain.Item;
 import com.switchfully.eurder.domain.ItemGroup;
 import com.switchfully.eurder.domain.Order;

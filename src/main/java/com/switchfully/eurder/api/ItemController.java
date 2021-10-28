@@ -36,7 +36,8 @@ public class ItemController {
     }
 
     @PutMapping(path = "/{itemId}", consumes = "application/json")
-    public void updateItem(@PathVariable String itemId, @RequestBody ItemDto itemDto, @RequestHeader String authorizedUserId) {
+    public void updateItem(@PathVariable String itemId, @RequestBody ItemDto itemDto,
+                           @RequestHeader String authorizedUserId) {
         logger.info("Updating item with name: " + itemDto.getName() + " by authorizedUserId: " + authorizedUserId);
         boolean updated = service.updateItem(itemId, itemDto, authorizedUserId);
         if (updated) {
@@ -47,13 +48,15 @@ public class ItemController {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public void handleIllegalArgumentException(IllegalArgumentException exception, HttpServletResponse response) throws IOException {
+    public void handleIllegalArgumentException(IllegalArgumentException exception,
+                                               HttpServletResponse response) throws IOException {
         logger.error("Illegal Argument for Item: " + exception.getMessage());
         response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public void handleNullPointerException(NullPointerException exception, HttpServletResponse response) throws IOException {
+    public void handleNullPointerException(NullPointerException exception,
+                                           HttpServletResponse response) throws IOException {
         logger.error("Null Pointer for Item: " + exception.getMessage());
         response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }

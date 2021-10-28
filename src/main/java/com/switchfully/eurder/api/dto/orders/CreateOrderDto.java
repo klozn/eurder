@@ -1,6 +1,6 @@
 package com.switchfully.eurder.api.dto.orders;
 
-import com.switchfully.eurder.api.dto.orders.itemgroups.CreateItemGroupDto;
+import com.switchfully.eurder.api.dto.itemgroups.CreateItemGroupDto;
 
 import java.util.List;
 

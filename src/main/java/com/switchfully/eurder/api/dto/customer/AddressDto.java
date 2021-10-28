@@ -11,39 +11,44 @@ public class AddressDto {
         return street;
     }
 
-    public void setStreet(String street) {
+    public AddressDto setStreet(String street) {
         this.street = street;
+        return this;
     }
 
     public String getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(String houseNumber) {
+    public AddressDto setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
+        return this;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public AddressDto setCity(String city) {
         this.city = city;
+        return this;
     }
 
     public String getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public AddressDto setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+        return this;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public AddressDto setCountry(String country) {
         this.country = country;
+        return this;
     }
 }

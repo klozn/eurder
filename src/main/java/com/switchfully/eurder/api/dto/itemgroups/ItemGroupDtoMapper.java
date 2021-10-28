@@ -1,7 +1,9 @@
-package com.switchfully.eurder.api.dto.orders.itemgroups;
+package com.switchfully.eurder.api.dto.itemgroups;
 
+import com.switchfully.eurder.api.dto.customer.AddressDtoMapper;
 import com.switchfully.eurder.domain.Item;
 import com.switchfully.eurder.domain.ItemGroup;
+import com.switchfully.eurder.domain.users.Address;
 import com.switchfully.eurder.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,10 +14,12 @@ import java.time.LocalDate;
 public class ItemGroupDtoMapper {
 
     private final ItemService itemService;
+    private final AddressDtoMapper addressDtoMapper;
 
     @Autowired
-    public ItemGroupDtoMapper(ItemService itemService) {
+    public ItemGroupDtoMapper(ItemService itemService, AddressDtoMapper addressDtoMapper) {
         this.itemService = itemService;
+        this.addressDtoMapper = addressDtoMapper;
     }
 
     public ItemGroup toEntity(CreateItemGroupDto itemGroupDto) {
@@ -39,6 +43,14 @@ public class ItemGroupDtoMapper {
     public CreateItemGroupDto toCreateItemGroupDto(ItemGroup itemGroup) {
         return new CreateItemGroupDto()
                 .setItemId(itemGroup.getItemId())
+                .setAmount(itemGroup.getAmount());
+    }
+
+    public ItemGroupShippingDto toItemGroupShippingDto(ItemGroup itemGroup, Address address) {
+        Item item = itemService.getById(itemGroup.getItemId());
+        return new ItemGroupShippingDto()
+                .setAddress(addressDtoMapper.toDto(address))
+                .setItemName(item.getName())
                 .setAmount(itemGroup.getAmount());
     }
 }

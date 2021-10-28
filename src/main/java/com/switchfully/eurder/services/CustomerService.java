@@ -49,10 +49,15 @@ public class CustomerService {
 
     public CustomerDto getCustomerById(String customerId, String authorizedUserId) {
         adminService.assertAdminId(authorizedUserId);
+        Customer customer = fetchCustomerIfExistsElseThrowException(customerId);
+        return mapper.toDto(customer);
+    }
+
+    public Customer fetchCustomerIfExistsElseThrowException(String customerId) {
         Customer customer = repo.getById(customerId);
         if (customer == null) {
             throw new IllegalArgumentException("No customer found with id: " + customerId);
         }
-        return mapper.toDto(customer);
+        return customer;
     }
 }

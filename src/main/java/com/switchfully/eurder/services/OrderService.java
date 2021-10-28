@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,5 +53,10 @@ public class OrderService {
             throw new UnauthorizedUserException("You are not the owner of the order with id: " + orderId);
         }
         return createNewOrder(mapper.toCreateOrderDto(order), authorizedUserId);
+    }
+
+    public Map<String, List<Order>> getOrdersPerCustomerId() {
+        return repo.getAll().stream()
+                .collect(Collectors.groupingBy(Order::getCustomerId));
     }
 }
