@@ -29,14 +29,8 @@ public class ItemService {
         return repo.save(mapper.toEntity(itemDto)) == null;
     }
 
-    public double getPrice(String itemId) {
-        Item item = fetchItemIfExistsElseThrowException(itemId);
-        return item.getPrice();
-    }
-
-    public int getStock(String itemId) {
-        Item item = fetchItemIfExistsElseThrowException(itemId);
-        return item.getStock();
+    public Item getById(String itemId) {
+        return fetchItemIfExistsElseThrowException(itemId);
     }
 
     private Item fetchItemIfExistsElseThrowException(String itemId) {

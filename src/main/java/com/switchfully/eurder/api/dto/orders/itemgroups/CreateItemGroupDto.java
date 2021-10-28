@@ -1,4 +1,4 @@
-package com.switchfully.eurder.api.dto.orders;
+package com.switchfully.eurder.api.dto.orders.itemgroups;
 
 public class CreateItemGroupDto {
     private String itemId;

@@ -1,12 +1,14 @@
 package com.switchfully.eurder.api;
 
 import com.switchfully.eurder.api.dto.orders.CreateOrderDto;
+import com.switchfully.eurder.api.dto.orders.OrderReportDto;
 import com.switchfully.eurder.services.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -38,6 +40,12 @@ public class OrderController {
         } else {
             logger.error("Order creation failed.");
         }
+    }
+
+    @GetMapping(produces = "application/json")
+    public OrderReportDto getOrderReport(@RequestHeader String authorizedUserId) {
+        logger.info("Getting order report for customer with id: " + authorizedUserId);
+        return service.getOrdersByCustomerID(authorizedUserId);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
