@@ -33,7 +33,12 @@ public class ItemController {
     @ResponseStatus(HttpStatus.CREATED)
     public void registerItem(@RequestBody CreateItemDto itemDto, @RequestHeader String authorizedUserId) {
         logger.info("Creating item with name: " + itemDto.getName() + " by authorizedUserId: " + authorizedUserId);
-        logger.info("Created = " + service.createNewItem(itemDto, authorizedUserId));
+        boolean created = service.createNewItem(itemDto, authorizedUserId);
+        if (created) {
+            logger.info("Item creation successful");
+        } else {
+            logger.error("Item creation failed.");
+        }
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

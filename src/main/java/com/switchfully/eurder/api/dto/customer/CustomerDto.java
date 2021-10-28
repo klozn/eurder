@@ -5,8 +5,32 @@ public class CustomerDto {
     private String firstname;
     private String lastname;
     private String email;
-    private AddressDto address;
+    private AddressDto address = new AddressDto();
     private String phoneNumber;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public AddressDto getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
     public CustomerDto setId(String id) {
         this.id = id;

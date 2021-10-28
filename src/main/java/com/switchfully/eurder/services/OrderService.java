@@ -27,6 +27,6 @@ public class OrderService {
         }
         customerService.assertCustomerId(userId);
         Order order = mapper.toEntity(orderDto, userId);
-        return repo.save(order) != null;
+        return repo.addToQueue(order);
     }
 }

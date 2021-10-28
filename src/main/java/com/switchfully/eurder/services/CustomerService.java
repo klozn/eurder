@@ -1,21 +1,28 @@
 package com.switchfully.eurder.services;
 
 import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
+import com.switchfully.eurder.api.dto.customer.CustomerDto;
 import com.switchfully.eurder.api.dto.customer.CustomerDtoMapper;
 import com.switchfully.eurder.domain.exceptions.UnauthorizedUserException;
 import com.switchfully.eurder.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CustomerService {
     private final CustomerRepo repo;
     private final CustomerDtoMapper mapper;
+    private final AdminService adminService;
 
     @Autowired
-    public CustomerService(CustomerRepo repo, CustomerDtoMapper mapper) {
+    public CustomerService(CustomerRepo repo, CustomerDtoMapper mapper, AdminService adminService) {
         this.repo = repo;
         this.mapper = mapper;
+        this.adminService = adminService;
     }
 
     public boolean createNewCustomer(CreateCustomerDto customerDto) {
@@ -31,4 +38,11 @@ public class CustomerService {
         }
     }
 
+    public List<CustomerDto> getAllCustomers(String authorizedUserId) {
+        adminService.assertAdminId(authorizedUserId);
+        return repo.getAll().stream()
+                .map(mapper::toDto)
+                .sorted(Comparator.comparing(CustomerDto::getLastname).thenComparing(CustomerDto::getFirstname))
+                .collect(Collectors.toList());
+    }
 }

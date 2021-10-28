@@ -1,20 +1,24 @@
 package com.switchfully.eurder.api;
 
 import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
+import com.switchfully.eurder.api.dto.customer.CustomerDto;
 import com.switchfully.eurder.services.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
@@ -32,7 +36,18 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public void registerCustomer(@RequestBody CreateCustomerDto customerDto) {
         logger.info("Creating new customer for email: " + customerDto.getEmail());
-        logger.info("Created = " + service.createNewCustomer(customerDto));
+        boolean created = service.createNewCustomer(customerDto);
+        if (created) {
+            logger.info("Customer creation successful");
+        } else {
+            logger.error("Customer creation failed.");
+        }
+    }
+
+    @GetMapping(produces = "application/json")
+    public List<CustomerDto> getAllCustomers(@RequestHeader String authorizedUserId) {
+        logger.info("Getting all customers for user with id: " + authorizedUserId);
+        return service.getAllCustomers(authorizedUserId);
     }
 
 

@@ -32,7 +32,12 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public void registerOrder(@RequestBody CreateOrderDto orderDto, @RequestHeader String authorizedUserId) {
         logger.info("Creating order for user with id: " + authorizedUserId);
-        logger.info("Created = " + service.createNewOrder(orderDto, authorizedUserId));
+        boolean created = service.createNewOrder(orderDto, authorizedUserId);
+        if (created) {
+            logger.info("Order creation successful");
+        } else {
+            logger.error("Order creation failed.");
+        }
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

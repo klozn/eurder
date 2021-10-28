@@ -3,6 +3,7 @@ package com.switchfully.eurder.services;
 import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
 import com.switchfully.eurder.api.dto.customer.CustomerDtoMapper;
 import com.switchfully.eurder.domain.users.Customer;
+import com.switchfully.eurder.repositories.AdminRepo;
 import com.switchfully.eurder.repositories.CustomerRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,12 +16,14 @@ class CustomerServiceTest {
     private CustomerRepo repo;
     private CustomerService service;
     private CustomerDtoMapper mapper;
+    private AdminService adminService;
 
     @BeforeEach
     void init() {
         repo = new CustomerRepo();
         mapper = new CustomerDtoMapper();
-        service = new CustomerService(repo, mapper);
+        adminService = new AdminService(new AdminRepo());
+        service = new CustomerService(repo, mapper, adminService);
     }
 
     @Test

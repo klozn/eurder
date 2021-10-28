@@ -26,7 +26,7 @@ public class ItemService {
             throw new NullPointerException("You can't create an Item from a null object.");
         }
         adminService.assertAdminId(authorizedUserId);
-        return repo.save(mapper.toEntity(itemDto)) != null;
+        return repo.save(mapper.toEntity(itemDto)) == null;
     }
 
     public double getPrice(String itemId) {
