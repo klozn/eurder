@@ -4,6 +4,7 @@ import com.switchfully.eurder.api.dto.customer.CreateCustomerDto;
 import com.switchfully.eurder.api.dto.customer.CustomerDto;
 import com.switchfully.eurder.api.dto.customer.CustomerDtoMapper;
 import com.switchfully.eurder.domain.exceptions.UnauthorizedUserException;
+import com.switchfully.eurder.domain.users.Address;
 import com.switchfully.eurder.domain.users.Customer;
 import com.switchfully.eurder.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,9 @@ public class CustomerService {
             throw new IllegalArgumentException("No customer found with id: " + customerId);
         }
         return customer;
+    }
+
+    public Address getAddress(String customerId) {
+        return fetchCustomerIfExistsElseThrowException(customerId).getAddress();
     }
 }

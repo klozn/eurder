@@ -23,13 +23,8 @@ public class ItemGroupDtoMapper {
     }
 
     public ItemGroup toEntity(CreateItemGroupDto itemGroupDto) {
-        LocalDate shippingDate = LocalDate.now().plusDays(1);
-        Item item = itemService.getById(itemGroupDto.getItemId());
-        if (item.getStock() < itemGroupDto.getAmount()) {
-            shippingDate = LocalDate.now().plusDays(7);
-        } else {
-            item.setStock(item.getStock() - itemGroupDto.getAmount());
-        }
+        LocalDate shippingDate = itemService.determineShippingDate(itemGroupDto);
+        itemService.deductFromStock(itemGroupDto.getItemId(), itemGroupDto.getAmount());
         return new ItemGroup(itemGroupDto.getItemId(), itemGroupDto.getAmount(), shippingDate);
     }
 

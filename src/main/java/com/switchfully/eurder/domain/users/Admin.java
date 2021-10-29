@@ -6,7 +6,7 @@ public class Admin {
     private final String id;
     private String firstname;
     private String lastname;
-    private String email;
+    private final String email;
 
     private Admin(Builder builder) {
         id = builder.id;

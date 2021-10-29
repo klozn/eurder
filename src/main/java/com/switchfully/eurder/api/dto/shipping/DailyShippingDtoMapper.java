@@ -30,7 +30,7 @@ public class DailyShippingDtoMapper {
         List<ItemGroupShippingDto> itemGroupShippingDtos = new ArrayList<>();
 
         for (String customerId : ordersPerCustomerId.keySet()) {
-            Address address = customerService.fetchCustomerIfExistsElseThrowException(customerId).getAddress();
+            Address address = customerService.getAddress(customerId);
             ordersPerCustomerId.get(customerId).stream()
                     .map(Order::getItemGroups)
                     .flatMap(Collection::stream)

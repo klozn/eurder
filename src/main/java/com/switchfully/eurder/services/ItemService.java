@@ -1,5 +1,6 @@
 package com.switchfully.eurder.services;
 
+import com.switchfully.eurder.api.dto.itemgroups.CreateItemGroupDto;
 import com.switchfully.eurder.api.dto.items.ItemDto;
 import com.switchfully.eurder.api.dto.items.UpdateItemDto;
 import com.switchfully.eurder.api.dto.items.ItemDtoMapper;
@@ -8,6 +9,7 @@ import com.switchfully.eurder.repositories.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,4 +65,21 @@ public class ItemService {
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    public LocalDate determineShippingDate(CreateItemGroupDto itemGroupDto) {
+        LocalDate shippingDate = LocalDate.now().plusDays(1);
+        Item item = getById(itemGroupDto.getItemId());
+        if (item.getStock() < itemGroupDto.getAmount()) {
+            shippingDate = LocalDate.now().plusDays(7);
+        }
+        return shippingDate;
+    }
+
+    public void deductFromStock(String itemId, int minusAmount) {
+        Item item = getById(itemId);
+        if (item.getStock() >= minusAmount) {
+            item.setStock(item.getStock() - minusAmount);
+        }
+    }
+
 }
