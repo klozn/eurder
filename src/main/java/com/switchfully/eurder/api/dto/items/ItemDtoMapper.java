@@ -2,8 +2,6 @@ package com.switchfully.eurder.api.dto.items;
 
 import com.switchfully.eurder.domain.Item;
 import com.switchfully.eurder.domain.RestockUrgency;
-import com.switchfully.eurder.services.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,13 +12,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class ItemDtoMapper {
-
-    private final ItemService itemService;
-
-    @Autowired
-    public ItemDtoMapper(ItemService itemService) {
-        this.itemService = itemService;
-    }
 
     public Item toEntity(UpdateItemDto updateItemDto) {
         return new Item(updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice(), updateItemDto.getStock());
