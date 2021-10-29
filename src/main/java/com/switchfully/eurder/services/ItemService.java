@@ -75,11 +75,13 @@ public class ItemService {
         return shippingDate;
     }
 
-    public void deductFromStock(String itemId, int minusAmount) {
+    public boolean deductFromStock(String itemId, int minusAmount) {
         Item item = getById(itemId);
         if (item.getStock() >= minusAmount) {
             item.setStock(item.getStock() - minusAmount);
+            return true;
         }
+        return false;
     }
 
 }

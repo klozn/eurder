@@ -7,13 +7,15 @@ public class ItemGroup {
     private final String itemId;
     private final int amount;
     private final LocalDate shippingDate;
+    private boolean reserved;
 
-    public ItemGroup(String itemId, int amount, LocalDate shippingDate) {
+    public ItemGroup(String itemId, int amount, LocalDate shippingDate, boolean reserved) {
         this.itemId = itemId;
         this.amount = amount;
         assertValidAmount();
         this.shippingDate = shippingDate;
         assertValidShippingDate();
+        this.reserved = reserved;
     }
 
     public String getItemId() {
@@ -26,6 +28,14 @@ public class ItemGroup {
 
     public LocalDate getShippingDate() {
         return shippingDate;
+    }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 
     private void assertValidAmount() {

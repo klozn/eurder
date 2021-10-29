@@ -24,8 +24,8 @@ public class ItemGroupDtoMapper {
 
     public ItemGroup toEntity(CreateItemGroupDto itemGroupDto) {
         LocalDate shippingDate = itemService.determineShippingDate(itemGroupDto);
-        itemService.deductFromStock(itemGroupDto.getItemId(), itemGroupDto.getAmount());
-        return new ItemGroup(itemGroupDto.getItemId(), itemGroupDto.getAmount(), shippingDate);
+        boolean reserved = itemService.deductFromStock(itemGroupDto.getItemId(), itemGroupDto.getAmount());
+        return new ItemGroup(itemGroupDto.getItemId(), itemGroupDto.getAmount(), shippingDate, reserved);
     }
 
     public ItemGroupDto toDto(ItemGroup itemGroup) {

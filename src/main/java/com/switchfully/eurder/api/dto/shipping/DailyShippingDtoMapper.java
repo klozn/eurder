@@ -5,6 +5,7 @@ import com.switchfully.eurder.api.dto.itemgroups.ItemGroupShippingDto;
 import com.switchfully.eurder.domain.Order;
 import com.switchfully.eurder.domain.users.Address;
 import com.switchfully.eurder.services.CustomerService;
+import com.switchfully.eurder.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +39,7 @@ public class DailyShippingDtoMapper {
                     .map(itemGroup -> itemGroupDtoMapper.toItemGroupShippingDto(itemGroup, address))
                     .forEach(itemGroupShippingDtos::add);
         }
+
         return new DailyShippingDto()
                 .setShippingDay(shippingDay)
                 .setItemGroups(itemGroupShippingDtos);
