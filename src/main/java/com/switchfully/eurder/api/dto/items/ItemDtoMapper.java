@@ -1,10 +1,26 @@
 package com.switchfully.eurder.api.dto.items;
 
 import com.switchfully.eurder.domain.Item;
+import com.switchfully.eurder.domain.RestockUrgency;
+import com.switchfully.eurder.services.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class ItemDtoMapper {
+
+    private final ItemService itemService;
+
+    @Autowired
+    public ItemDtoMapper(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     public Item toEntity(UpdateItemDto updateItemDto) {
         return new Item(updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice(), updateItemDto.getStock());
@@ -16,5 +32,23 @@ public class ItemDtoMapper {
                 .setName(item.getName())
                 .setDescription(item.getDescription())
                 .setPrice(item.getPrice());
+    }
+
+    public List<ItemDtoWithUrgency> toItemOverview(Map<Item, RestockUrgency> idUrgencyMap) {
+        List<ItemDtoWithUrgency> itemDtoWithUrgencyList = new ArrayList<>();
+        for (Item item: idUrgencyMap.keySet()) {
+            itemDtoWithUrgencyList.add(
+                    new ItemDtoWithUrgency()
+                            .setId(item.getId())
+                            .setName(item.getName())
+                            .setDescription(item.getDescription())
+                            .setPrice(item.getPrice())
+                            .setStock(item.getStock())
+                            .setRestockUrgency(idUrgencyMap.get(item))
+                            );
+        }
+        return itemDtoWithUrgencyList.stream()
+                .sorted(Comparator.comparingInt(ItemDtoWithUrgency::getStock))
+                .collect(Collectors.toList());
     }
 }
