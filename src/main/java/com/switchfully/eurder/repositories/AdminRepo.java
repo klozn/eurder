@@ -25,9 +25,9 @@ public class AdminRepo {
         return Collections.unmodifiableSet(admins);
     }
 
-    public boolean save(Admin admin) {
+    public void save(Admin admin) {
         assertEmailNotRegistered(admin.getEmail());
-        return admins.add(admin);
+        admins.add(admin);
     }
 
     private void assertEmailNotRegistered(String email) {

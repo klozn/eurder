@@ -20,14 +20,6 @@ public class Admin {
         return id;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
     public String getEmail() {
         return email;
     }

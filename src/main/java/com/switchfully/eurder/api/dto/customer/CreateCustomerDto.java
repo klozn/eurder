@@ -91,20 +91,4 @@ public class CreateCustomerDto {
         this.phoneNumber = phoneNumber;
         return this;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("CreateCustomerDto{");
-        sb.append("firstname='").append(firstname).append('\'');
-        sb.append(", lastname='").append(lastname).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", street='").append(street).append('\'');
-        sb.append(", houseNumber='").append(houseNumber).append('\'');
-        sb.append(", city='").append(city).append('\'');
-        sb.append(", postalCode='").append(postalCode).append('\'');
-        sb.append(", country='").append(country).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }
