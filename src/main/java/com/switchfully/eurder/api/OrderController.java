@@ -53,7 +53,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping
+    @PutMapping// hmmm :/
     public void processOrders(@RequestHeader String authorizedUserId) {
         logger.info("Processing orders.");
         service.process(authorizedUserId);
