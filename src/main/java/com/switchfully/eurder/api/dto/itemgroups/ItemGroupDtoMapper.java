@@ -27,6 +27,8 @@ public class ItemGroupDtoMapper {
         Item item = itemService.getById(itemGroupDto.getItemId());
         if (item.getStock() < itemGroupDto.getAmount()) {
             shippingDate = LocalDate.now().plusDays(7);
+        } else {
+            item.setStock(item.getStock() - itemGroupDto.getAmount());
         }
         return new ItemGroup(itemGroupDto.getItemId(), itemGroupDto.getAmount(), shippingDate);
     }

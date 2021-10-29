@@ -3,15 +3,15 @@ package com.switchfully.eurder.repositories;
 import com.switchfully.eurder.domain.Order;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 @Repository
 public class OrderRepo {
 
-    private final Queue<Order> orders = new PriorityQueue<>();
+    private final Deque<Order> orders = new ArrayDeque<>();
 
     public boolean addToQueue(Order order) {
         return orders.add(order);

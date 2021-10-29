@@ -10,10 +10,10 @@ public class ItemGroup {
 
     public ItemGroup(String itemId, int amount, LocalDate shippingDate) {
         this.itemId = itemId;
-        assertValidAmount();
         this.amount = amount;
-        assertValidShippingDate();
+        assertValidAmount();
         this.shippingDate = shippingDate;
+        assertValidShippingDate();
     }
 
     public String getItemId() {
