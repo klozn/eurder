@@ -43,7 +43,7 @@ public class OrderController {
 
     @PostMapping(path = "/{orderId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void reOrder(@PathVariable String orderId, @RequestHeader String authorizedUserId) {
+    public void reorder(@PathVariable String orderId, @RequestHeader String authorizedUserId) {
         logger.info("Reordering orderId: " + orderId + " with customerId: " + authorizedUserId);
         boolean created = service.reorder(orderId, authorizedUserId);
         if (created) {
@@ -51,6 +51,12 @@ public class OrderController {
         } else {
             logger.error("Order creation failed.");
         }
+    }
+
+    @PostMapping
+    public void processOrders(@RequestHeader String authorizedUserId) {
+        logger.info("Processing orders.");
+        service.process(authorizedUserId);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

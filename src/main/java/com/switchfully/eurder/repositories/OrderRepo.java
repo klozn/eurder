@@ -27,4 +27,12 @@ public class OrderRepo {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Order pop() {
+        return orders.pop();
+    }
+
+    public Order peek() {
+        return orders.peek();
+    }
 }
