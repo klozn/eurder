@@ -25,7 +25,7 @@ public class ItemDtoMapper {
                 .setPrice(item.getPrice());
     }
 
-    public List<ItemDtoWithUrgency> toItemOverview(Map<Item, RestockUrgency> idUrgencyMap) {
+    public List<ItemDtoWithUrgency> toItemOverview(Map<Item, RestockUrgency> idUrgencyMap, RestockUrgency restockUrgencyToFilter) {
         List<ItemDtoWithUrgency> itemDtoWithUrgencyList = new ArrayList<>();
         for (Item item: idUrgencyMap.keySet()) {
             itemDtoWithUrgencyList.add(
@@ -38,7 +38,13 @@ public class ItemDtoMapper {
                             .setRestockUrgency(idUrgencyMap.get(item))
                             );
         }
+        if (restockUrgencyToFilter == null) {
+            return itemDtoWithUrgencyList.stream()
+                    .sorted(Comparator.comparingInt(ItemDtoWithUrgency::getStock))
+                    .collect(Collectors.toList());
+        }
         return itemDtoWithUrgencyList.stream()
+                .filter(itemDtoWithUrgency -> itemDtoWithUrgency.getRestockUrgency().equals(restockUrgencyToFilter))
                 .sorted(Comparator.comparingInt(ItemDtoWithUrgency::getStock))
                 .collect(Collectors.toList());
     }

@@ -26,9 +26,9 @@ public class ItemOverviewService {
         this.mapper = mapper;
     }
 
-    public List<ItemDtoWithUrgency> getOverview(String authorizedUserId) {
+    public List<ItemDtoWithUrgency> getOverview(RestockUrgency restockUrgency, String authorizedUserId) {
         adminService.assertAdminId(authorizedUserId);
-        return mapper.toItemOverview(getRestockUrgencyPerItemIds());
+        return mapper.toItemOverview(getRestockUrgencyPerItemIds(), restockUrgency);
     }
 
     private Map<Item, RestockUrgency> getRestockUrgencyPerItemIds() {

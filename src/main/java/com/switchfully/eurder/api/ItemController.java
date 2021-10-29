@@ -4,6 +4,7 @@ import com.switchfully.eurder.api.dto.items.ItemDto;
 import com.switchfully.eurder.api.dto.items.ItemDtoWithUrgency;
 import com.switchfully.eurder.api.dto.items.UpdateItemDto;
 import com.switchfully.eurder.domain.RestockUrgency;
+import com.switchfully.eurder.services.ItemOverviewService;
 import com.switchfully.eurder.services.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,12 +57,6 @@ public class ItemController {
         logger.info("Showing all items.");
         return service.getItems();
     }
-
-    /*@GetMapping(produces = "application/json")
-    public List<ItemDtoWithUrgency> getOverview(@RequestParam(value = "urgency", required = false) RestockUrgency restockUrgency,
-                                                RequestHeader String authorizedUserId) {
-
-    }*/
 
     @ExceptionHandler(IllegalArgumentException.class)
     public void handleIllegalArgumentException(IllegalArgumentException exception,
